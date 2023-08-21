@@ -23,12 +23,12 @@
             <!-- This is a means of dynamic menu creation using the WP admin interface -->
 
             <ul>
-              <li <?php if (is_page('about-us') or wp_get_post_parent_id(0) == 11) echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/about-us')?>">About Us</a></li>
+              <li <?php if (is_page('about-us') or wp_get_post_parent_id(0) == 11) echo 'class="current-menu-item"'?> ><a href="<?php echo site_url('/about-us')?>">About Us</a></li>
               <!-- this creates a dynamic link it would have been possible to route using /about_us, but this would have have worked if we were not in a development server -->
               <li><a href="#">Programs</a></li>
-              <li><a href="#">Events</a></li>
+              <li <?php if (get_post_type() == 'event') echo 'class="current-menu-item"'?> ><a href="<?php echo get_post_type_archive_link('event');?>">Events</a></li>
               <li><a href="#">Campuses</a></li>
-              <li <?php if (get_post_type() == 'post') echo 'class="current-menu-item"'?>><a href="<?php echo site_url('/blog');?>">Blog</a></li>
+              <li <?php if (get_post_type() == 'post') echo 'class="current-menu-item"'?> ><a href="<?php echo site_url('/blog');?>">Blog</a></li>
             </ul>
 
           </nav>
