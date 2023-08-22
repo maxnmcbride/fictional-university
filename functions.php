@@ -21,4 +21,24 @@
 
     add_action('after_setup_theme', 'university_features');
     // this will create an individual title for each page to be displayed in the tab of the browser
+
+    function university_adjust_queries($query){
+        if (!is_admin() && is_post_type_archive('event') && $query->is_main_query()){
+            $today = date('Ymd');
+            $query->set('meta_key', 'event_date');
+            $query->set('orderby', 'meta_value_num');
+            $query->set('order', 'ASC');
+            $query->set('meta_query', array(
+                array(
+                    'key' => 'event_date',
+                    'compare' => '>=',
+                    'value' => $today,
+                    'type' => 'numeric'
+                    )
+                ));
+        }
+    }
+    // custom queries are universal meaning that they even affect the layout of the back end or admin
+    // portion of wordpress, the !is_admin() allows us to say that it should only affect front end queries
+    add_action('pre_get_posts', 'university_adjust_queries');
 ?>
